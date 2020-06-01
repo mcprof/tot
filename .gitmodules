@@ -13,3 +13,6 @@
 [submodule "vim/tpope/start/vim-commentary"]
 	path = vim/tpope/start/vim-commentary
 	url = https://github.com/tpope/vim-commentary.git
+[submodule "vim/bundle/YouCompleteMe"]
+	path = vim/bundle/YouCompleteMe
+	url = https://github.com/ycm-core/YouCompleteMe.git
