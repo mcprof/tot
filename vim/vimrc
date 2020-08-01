@@ -93,7 +93,7 @@ inoremap kj <Esc>
 inoremap jj <Esc>
 
 set undofile                " Save undos after file closes
-set undodir=$HOME/.vim/undo " where to save undo histories
+" set undodir=$HOME/.vim/undo " where to save undo histories
 set undolevels=1000         " How many undos
 set undoreload=10000        " number of lines to save for undo
 
@@ -112,6 +112,38 @@ set undoreload=10000        " number of lines to save for undo
 "" https://github.com/junegunn/goyo.vim/issues/134https://github.com/junegunn/goyo.vim/issues/134
 ""https://github.com/junegunn/goyo.vim/issues/59
 "" https://github.com/junegunn/goyo.vim/issues/71
+
+function! s:goyo_enter()
+  " if executable('tmux') && strlen($TMUX)
+  "   silent !tmux set status off
+  "   silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
+  " endif
+  set noshowmode
+  set noshowcmd
+  set scrolloff=999
+  " Limelight
+  " ...
+  colors seoul256
+  " https://vim.fandom.com/wiki/Automatic_word_wrapping
+endfunction
+
+function! s:goyo_leave()
+  " if executable('tmux') && strlen($TMUX)
+  "   silent !tmux set status on
+  "   silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
+  " endif
+  set showmode
+  set showcmd
+  set scrolloff=5
+  " Limelight!
+  " ...
+  colorscheme default
+endfunction
+
+autocmd! User GoyoEnter nested call <SID>goyo_enter()
+autocmd! User GoyoLeave nested call <SID>goyo_leave()
+
+
 
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
@@ -206,8 +238,11 @@ nnoremap <buffer> <F9> :w<cr>:exec '!python3' shellescape(@%, 1)<cr>
 " map <F12> :wa<cr> <bar> :exe !tmux send -t bottom 'pwd' C-m"
 
 "single-button make/compile by having bottom tmux pane repeat last given command
-map <silent> <F4> :wa<cr><bar>:silent exec "!tmux send -t bottom '\\!\\!' C-m"<cr><bar>:redraw!<cr>
+map <silent> <F4> :wa<cr><bar>:silent exec "!tmux send -t right '\\!\\!' C-m"<cr><bar>:redraw!<cr>
+imap <silent> <F4> <Esc>:wa<cr><bar>:silent exec "!tmux send -t right '\\!\\!' C-m"<cr><bar>:redraw!<cr>
 map <silent> <F12> :wa<cr><bar>:silent exec "!tmux send -t bottom '\\!\\!' C-m"<cr><bar>:redraw!<cr>
+" set <F4>=<C-v><F4> " to get F4 to trigger in insert mode too
+
 
 " vimrc editing and reloading
 nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
@@ -215,3 +250,34 @@ map <leader>vr :source $MYVIMRC<cr>
 map <leader>vimrc :tabe $MYVIMRC<cr>
 autocmd bufwritepost .vimrc source $MYVIMRC
 
+" " Writeroom script equivalent from https://web.archive.org/web/20131223015541/http://connermcd.com/blog/2011/10/12/using-vim-in-place-of-writeroom/
+" " let g:writeroom = 0
+" let g:transparency = &transparency;
+" function! WriteRoom()
+"    if has("gui_running")
+"       if g:writeroom == 0
+"          let g:writeroom = 1
+"          set columns=80
+"          set fullscreen
+"          set linebreak
+"          set nocursorline
+"          set nolist
+"          set nonumber
+"          set noshowmode
+"          set rulerformat=%{strftime('%b %e %I:%M %p')}
+"          set transparency=0
+"          hi NonText guifg=bg
+"       else
+"          let g:writeroom = 0
+"          set cursorline
+"          set list
+"          set nofullscreen
+"          set nolinebreak
+"          set number
+"          set rulerformat=
+"          set showmode
+"          let &transparency;=g:transparency
+"          hi clear
+"       endif
+"    endif
+" endfunction
