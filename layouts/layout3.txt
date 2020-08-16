@@ -1,0 +1,11 @@
+{del}>{lwin}{u}{s}
+{hk1}>{s5}{x1}{-lctrl}{pup}{+lctrl}
+{hk2}>{s5}{x1}{-lctrl}{pdn}{+lctrl}
+{hk3}>{s5}{x1}{end}
+{hk4}>{-alt}{tab}{+alt}{d125}
+{hk5}>{s5}{x1}{pup}
+{hk6}>{s1}{-lctrl}{x}{+lctrl}
+[caps]>[lctrl]
+{hk7}>{s5}{x1}{pdn}
+{hk8}>{s5}{x1}{-lctrl}{c}{+lctrl}
+{hk10}>{-lctrl}{v}{+lctrl}{d125}

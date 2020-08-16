@@ -1,0 +1,14 @@
+{del}>{-lwin}{l}{+lwin}
+{hk1}>{s5}{x1}{-ctrl}{pup}{+ctrl}
+{hk2}>{s5}{x1}{-ctrl}{pdn}{+ctrl}
+{hk3}>{s5}{x1}{end}
+{hk4}>{s5}{x1}{-alt}{tab}{+alt}
+{hk5}>{s5}{x1}{pup}
+{hk6}>{s1}{-ctrl}{x}{+ctrl}
+[caps]>[lctrl]
+{hk7}>{s5}{x1}{pdn}
+{hk8}>{s5}{x1}{-ctrl}{c}{+ctrl}
+{hk10}>{s5}{x1}{-lshft}{ins}{+lshft}
+[F8]>[mute]
+[F9]>[vol-]
+[F10]>[vol+]
