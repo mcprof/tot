@@ -168,8 +168,9 @@ set splitbelow
 set splitright
 
 "YouCompleteMe personalizations
-nmap <leader>D <plug>(YCMHover)
+nmap <leader>d <plug>(YCMHover)
 let g:ycm_auto_hover=''
+
 
 nnoremap <buffer> <F9> :w<cr>:exec '!python3' shellescape(@%, 1)<cr>
 
