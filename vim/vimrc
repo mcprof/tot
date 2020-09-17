@@ -238,11 +238,15 @@ nnoremap <buffer> <F9> :w<cr>:exec '!python3' shellescape(@%, 1)<cr>
 " map <F12> :wa<CR> :exe !tmux send -t bottom '!!' C-m"
 " map <F12> :wa<cr> <bar> :exe !tmux send -t bottom 'pwd' C-m"
 
-"single-button make/compile by having bottom tmux pane repeat last given command
+"single-button make/compile by having bottom tmux pane repeat last given command '!tmux send -t bottom' for bottom pane 
 map <silent> <F4> :wa<cr><bar>:silent exec "!tmux send -t right '\\!\\!' C-m"<cr><bar>:redraw!<cr>
 imap <silent> <F4> <Esc>:wa<cr><bar>:silent exec "!tmux send -t right '\\!\\!' C-m"<cr><bar>:redraw!<cr>
 map <silent> <F12> :wa<cr><bar>:silent exec "!tmux send -t bottom '\\!\\!' C-m"<cr><bar>:redraw!<cr>
 " set <F4>=<C-v><F4> " to get F4 to trigger in insert mode too
+"
+"single-button make/compile by having bottom tmux pane repeat last given command
+" map <silent> <F4> :wa<cr><bar>:silent exec "!tmux send -t bottom '\\!\\!' C-m"<cr><bar>:redraw!<cr>
+" map <silent> <F12> :wa<cr><bar>:silent exec "!tmux send -t bottom '\\!\\!' C-m"<cr><bar>:redraw!<cr>
 
 
 " vimrc editing and reloading
