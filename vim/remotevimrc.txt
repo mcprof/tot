@@ -63,9 +63,7 @@ set t_Co=256
 "set background=dark
 "colorscheme solarized
 
-" Always show filename at bottom of screen, useful for Tmux splits
-set laststatus=2
-" set statusline+=%F "shows full filename at bottom of screen
+set statusline=%f "shows filename at bottom of screen at all times
 
 nnoremap <silent> <CR> :nohlsearch<CR><CR>
 "clear search highlighting with enter key: nnoremap <silent> <CR> :nohlsearch<CR><CR>
@@ -107,45 +105,13 @@ set undoreload=10000        " number of lines to save for undo
 "  autocmd!
 ""  autocmd FileType markdown,mkd call pencil#init()
 "  autocmd FileType markdown,mkd :PencilSoft
-"  autocmd FileType markdown,mkd :colo seoul256 
+"  autocmd FileType markdown,mkd :colo seoul256
 "  autocmd FileType markdown,mkd :Goyo
 "augroup END
 "map <leader>f :Goyo <bar> highlight StatusLineNC ctermfg=white<CR>
 "" https://github.com/junegunn/goyo.vim/issues/134https://github.com/junegunn/goyo.vim/issues/134
 ""https://github.com/junegunn/goyo.vim/issues/59
 "" https://github.com/junegunn/goyo.vim/issues/71
-
-function! s:goyo_enter()
-  " if executable('tmux') && strlen($TMUX)
-  "   silent !tmux set status off
-  "   silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
-  " endif
-  set noshowmode
-  set noshowcmd
-  set scrolloff=999
-  " Limelight
-  " ...
-  colors seoul256
-  " https://vim.fandom.com/wiki/Automatic_word_wrapping
-endfunction
-
-function! s:goyo_leave()
-  " if executable('tmux') && strlen($TMUX)
-  "   silent !tmux set status on
-  "   silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
-  " endif
-  set showmode
-  set showcmd
-  set scrolloff=5
-  " Limelight!
-  " ...
-  colorscheme default
-endfunction
-
-autocmd! User GoyoEnter nested call <SID>goyo_enter()
-autocmd! User GoyoLeave nested call <SID>goyo_leave()
-
-
 
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
@@ -170,9 +136,8 @@ set splitbelow
 set splitright
 
 "YouCompleteMe personalizations
-nmap <leader>d <plug>(YCMHover)
+nmap <leader>D <plug>(YCMHover)
 let g:ycm_auto_hover=''
-
 
 nnoremap <buffer> <F9> :w<cr>:exec '!python3' shellescape(@%, 1)<cr>
 
@@ -224,7 +189,7 @@ nnoremap <buffer> <F9> :w<cr>:exec '!python3' shellescape(@%, 1)<cr>
 
 "     " resize window to content length
 "     " Note: This is annoying because if you print a lot of lines then your code buffer is forced to a height of one line every time you run this function.
-"     "       However without this line the buffer starts off as a default size and if you resize the buffer then it keeps that custom size after repeated runs of this function.
+"     "       However without this line the buffer starts off as a default size and if you resize the buffer then it keeps that custom size after repeated >
 "     "       But if you close the output buffer then it returns to using the default size when its recreated
 "     execute 'resize' . line('$')
 
@@ -233,56 +198,19 @@ nnoremap <buffer> <F9> :w<cr>:exec '!python3' shellescape(@%, 1)<cr>
 "     setlocal nomodifiable
 " endfunction
 
-"autocmd BufWinLeave *.* mkviewautocmd BufWinEnter *.* silent loadview "preserves code folds across saving and re-opening, from https://www.freecodecamp.org/news/learn-linux-vim-basic-features-19134461ab85/?gi=98085b19ac53
+"autocmd BufWinLeave *.* mkviewautocmd BufWinEnter *.* silent loadview "preserves code folds across saving and re-opening, from https://www.freecodecamp.or>
 "
 "
 "
 " map <F12> :wa<CR> :exe !tmux send -t bottom '!!' C-m"
 " map <F12> :wa<cr> <bar> :exe !tmux send -t bottom 'pwd' C-m"
 
-"single-button make/compile by having bottom tmux pane repeat last given command '!tmux send -t bottom' for bottom pane 
-map <silent> <F4> :wa<cr><bar>:silent exec "!tmux send -t right '\\!\\!' C-m"<cr><bar>:redraw!<cr>
-imap <silent> <F4> <Esc>:wa<cr><bar>:silent exec "!tmux send -t right '\\!\\!' C-m"<cr><bar>:redraw!<cr>
+"single-button make/compile by having bottom tmux pane repeat last given command
+map <silent> <F4> :wa<cr><bar>:silent exec "!tmux send -t bottom '\\!\\!' C-m"<cr><bar>:redraw!<cr>
 map <silent> <F12> :wa<cr><bar>:silent exec "!tmux send -t bottom '\\!\\!' C-m"<cr><bar>:redraw!<cr>
-" set <F4>=<C-v><F4> " to get F4 to trigger in insert mode too
-"
 
 " vimrc editing and reloading
 nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
 map <leader>vr :source $MYVIMRC<cr>
 map <leader>vimrc :tabe $MYVIMRC<cr>
 autocmd bufwritepost .vimrc source $MYVIMRC
-
-" " Writeroom script equivalent from https://web.archive.org/web/20131223015541/http://connermcd.com/blog/2011/10/12/using-vim-in-place-of-writeroom/
-" " let g:writeroom = 0
-" let g:transparency = &transparency;
-" function! WriteRoom()
-"    if has("gui_running")
-"       if g:writeroom == 0
-"          let g:writeroom = 1
-"          set columns=80
-"          set fullscreen
-"          set linebreak
-"          set nocursorline
-"          set nolist
-"          set nonumber
-"          set noshowmode
-"          set rulerformat=%{strftime('%b %e %I:%M %p')}
-"          set transparency=0
-"          hi NonText guifg=bg
-"       else
-"          let g:writeroom = 0
-"          set cursorline
-"          set list
-"          set nofullscreen
-"          set nolinebreak
-"          set number
-"          set rulerformat=
-"          set showmode
-"          let &transparency;=g:transparency
-"          hi clear
-"       endif
-"    endif
-" endfunction
-
-
