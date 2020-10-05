@@ -286,3 +286,6 @@ autocmd bufwritepost .vimrc source $MYVIMRC
 " endfunction
 
 
+" Adding paste in new line, adapted from https://stackoverflow.com/questions/1346737/how-to-paste-in-a-new-line-with-vim#1346747 default register is * on Mac now with system clipboard integrations
+" This one may be a little better (strip the ending new-line before pasting)
+:nmap <leader>p :call append(line('.'), substitute(@*, '\n$', '', ''))<CR>
