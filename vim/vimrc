@@ -84,6 +84,9 @@ set softtabstop=4
 set expandtab                   " use spaces, not tabs (optional)
 set backspace=indent,eol,start  " backspace through everything in insert mode
 
+" https://vim.fandom.com/wiki/Word_wrap_without_line_breaks
+set wrap linebreak
+
 "" Searching
 set hlsearch                    " highlight matches
 set incsearch                   " incremental searching
@@ -169,7 +172,7 @@ set number
 set splitbelow
 set splitright
 
-"YouCompleteMe personalizations
+"YouCompleteMe personalizations to popup window tip
 nmap <leader>d <plug>(YCMHover)
 let g:ycm_auto_hover=''
 
