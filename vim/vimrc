@@ -292,3 +292,52 @@ autocmd bufwritepost .vimrc source $MYVIMRC
 " Adding paste in new line, adapted from https://stackoverflow.com/questions/1346737/how-to-paste-in-a-new-line-with-vim#1346747 default register is * on Mac now with system clipboard integrations
 " This one may be a little better (strip the ending new-line before pasting)
 :nmap <leader>p :call append(line('.'), substitute(@*, '\n$', '', ''))<CR>
+
+
+" Word Count, from https://stackoverflow.com/questions/114431/fast-word-count-function-in-vim
+" Gives a weird functionality where there is a character under tha cursor that
+" cannot easily be deleted. Also crashes on invocation with an empty document
+" function WordCount()
+"   let s:old_status = v:statusmsg
+"   exe 'silent normal g\<c-g>'
+"   let s:word_count = str2nr(split(v:statusmsg)[11])
+"   let v:statusmsg = s:old_status
+"   return s:word_count
+" endfunction
+" :set statusline=wc:%{WordCount()}
+
+
+"Another wordcount implementation, from https://cromwell-intl.com/open-source/vim-word-count.html
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Here begins my automated wordcount addition.
+" This combines several ideas from:
+" http://stackoverflow.com/questions/114431/fast-word-count-function-in-vim
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:word_count="<unknown>"
+function WordCount()
+	return g:word_count
+endfunction
+function UpdateWordCount()
+	let lnum = 1
+	let n = 0
+	while lnum <= line('$')
+		let n = n + len(split(getline(lnum)))
+		let lnum = lnum + 1
+	endwhile
+	let g:word_count = n
+endfunction
+" Update the count when cursor is idle in command or insert mode.
+" Update when idle for 1000 msec (default is 4000 msec).
+set updatetime=1000
+augroup WordCounter
+	au! CursorHold,CursorHoldI * call UpdateWordCount()
+augroup END
+" Set statusline, shown here a piece at a time
+highlight User1 ctermbg=green guibg=green ctermfg=black guifg=black
+set statusline=%1*			" Switch to User1 color highlight
+set statusline+=%<%F			" file name, cut if needed at start
+set statusline+=%M			" modified flag
+set statusline+=%y			" file type
+set statusline+=%=			" separator from left to right justified
+set statusline+=\ %{WordCount()}\ words,
+set statusline+=\ %l/%L\ lines,\ %P	" percentage through the file
