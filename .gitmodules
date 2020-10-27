@@ -22,3 +22,6 @@
 [submodule "vim/pack/reedes/start/vim-pencil"]
 	path = vim/pack/reedes/start/vim-pencil
 	url = https://github.com/reedes/vim-pencil.git
+[submodule "vim/pack/tpope/start/vim-surround"]
+	path = vim/pack/tpope/start/vim-surround
+	url = https://github.com/tpope/vim-surround.git
