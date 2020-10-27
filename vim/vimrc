@@ -118,35 +118,35 @@ set undoreload=10000        " number of lines to save for undo
 ""https://github.com/junegunn/goyo.vim/issues/59
 "" https://github.com/junegunn/goyo.vim/issues/71
 
-function! s:goyo_enter()
-  " if executable('tmux') && strlen($TMUX)
-  "   silent !tmux set status off
-  "   silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
-  " endif
-  set noshowmode
-  set noshowcmd
-  set scrolloff=999
-  " Limelight
-  " ...
-  colors seoul256
-  " https://vim.fandom.com/wiki/Automatic_word_wrapping
-endfunction
+" function! s:goyo_enter()
+"   " if executable('tmux') && strlen($TMUX)
+"   "   silent !tmux set status off
+"   "   silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
+"   " endif
+"   set noshowmode
+"   set noshowcmd
+"   set scrolloff=999
+"   " Limelight
+"   " ...
+"   colors seoul256
+"   " https://vim.fandom.com/wiki/Automatic_word_wrapping
+" endfunction
 
-function! s:goyo_leave()
-  " if executable('tmux') && strlen($TMUX)
-  "   silent !tmux set status on
-  "   silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
-  " endif
-  set showmode
-  set showcmd
-  set scrolloff=5
-  " Limelight!
-  " ...
-  colorscheme default
-endfunction
+" function! s:goyo_leave()
+"   " if executable('tmux') && strlen($TMUX)
+"   "   silent !tmux set status on
+"   "   silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
+"   " endif
+"   set showmode
+"   set showcmd
+"   set scrolloff=5
+"   " Limelight!
+"   " ...
+"   colorscheme default
+" endfunction
 
-autocmd! User GoyoEnter nested call <SID>goyo_enter()
-autocmd! User GoyoLeave nested call <SID>goyo_leave()
+" autocmd! User GoyoEnter nested call <SID>goyo_enter()
+" autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
 
 
@@ -294,6 +294,33 @@ autocmd bufwritepost .vimrc source $MYVIMRC
 " This one may be a little better (strip the ending new-line before pasting)
 :nmap <leader>p :call append(line('.'), substitute(@*, '\n$', '', ''))<CR>
 
+"Goyo Settings:
+"" Ensure :q to quit even when Goyo is active, https://github.com/junegunn/goyo.vim/wiki/Customization
+    function! s:goyo_enter()
+      " set noshowcmd " added personally
+      let b:quitting = 0
+      let b:quitting_bang = 0
+      autocmd QuitPre <buffer> let b:quitting = 1
+      cabbrev <buffer> q! let b:quitting_bang = 1 <bar> q!
+    endfunction
+
+    function! s:goyo_leave()
+      " Quit Vim if this is the only remaining buffer
+      colors default
+      " set showcmd " added personally
+      if b:quitting && len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
+        if b:quitting_bang
+          qa!
+        else
+          qa
+        endif
+      endif
+    endfunction
+
+    autocmd! User GoyoEnter call <SID>goyo_enter()
+    autocmd! User GoyoLeave call <SID>goyo_leave()
+
+
 
 " Bugged Word Count, from https://stackoverflow.com/questions/114431/fast-word-count-function-in-vim
 " Gives a weird functionality where there is a character under tha cursor that
@@ -375,6 +402,9 @@ function! MarkdownPrefFunction()
     setlocal spell
     setlocal tabstop=4
     setlocal wrap
+    " colors seoul256
+    colors murphy
+    Goyo
 endfunction
 autocmd Filetype markdown call MarkdownPrefFunction()
 
