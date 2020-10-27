@@ -302,11 +302,13 @@ autocmd bufwritepost .vimrc source $MYVIMRC
       let b:quitting_bang = 0
       autocmd QuitPre <buffer> let b:quitting = 1
       cabbrev <buffer> q! let b:quitting_bang = 1 <bar> q!
+      PencilSoft " initiates vim-pencil with soft line wrapping
     endfunction
 
     function! s:goyo_leave()
       " Quit Vim if this is the only remaining buffer
       colors default
+      PencilOff " exits vim-pencil
       " set showcmd " added personally
       if b:quitting && len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
         if b:quitting_bang
