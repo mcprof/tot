@@ -76,6 +76,7 @@ set encoding=utf-8
 set showcmd                     " display incomplete commands
 " filetype plugin indent on       " load file type plugins + indentation / duplicate of what's in vundle setup
 
+" Starting point of vimrc was https://mislav.net/2011/12/vim-revisited/
 "" Whitespace
 "set nowrap                      " don't wrap lines
 " command! -nargs=* Wrap set wrap linebreak nolist " disabled with later line wrap, uncertain of the origin of this line
