@@ -303,7 +303,7 @@ autocmd bufwritepost .vimrc source $MYVIMRC
       let b:quitting_bang = 0
       autocmd QuitPre <buffer> let b:quitting = 1
       cabbrev <buffer> q! let b:quitting_bang = 1 <bar> q!
-      PencilSoft " initiates vim-pencil with soft line wrapping
+      " PencilSoft " initiates vim-pencil with soft line wrapping
     endfunction
 
     function! s:goyo_leave()
@@ -405,9 +405,10 @@ function! MarkdownPrefFunction()
     setlocal spell
     setlocal tabstop=4
     setlocal wrap
+    PencilSoft
     " colors seoul256
-    colors murphy
-    Goyo
+    " colors murphy
+    " Goyo
 endfunction
 autocmd Filetype markdown call MarkdownPrefFunction()
 
