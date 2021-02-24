@@ -150,7 +150,7 @@ set undoreload=10000        " number of lines to save for undo
 " autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
 
-
+" Split navigation
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
@@ -160,6 +160,10 @@ noremap <silent> <c-_> :let @/ = ""<CR>
 
 " Autosave when focus is lost (uncertain if functioning
 au FocusLost * :wa
+" Autosave on text change, from https://stackoverflow.com/questions/6991638/how-to-auto-save-a-file-every-1-second-in-vim
+autocmd TextChanged,TextChangedI * silent write
+
+
 " au BufNewFile,BufRead *.py
 "     \ set tabstop=4 |
 "     \ set softtabstop=4 |
@@ -174,7 +178,7 @@ set number
 set splitbelow
 set splitright
 
-"YouCompleteMe personalizations to popup window tip
+"YouCompleteMe personalizations to popup window tooltip
 nmap <leader>d <plug>(YCMHover)
 let g:ycm_auto_hover=''
 
@@ -325,53 +329,42 @@ autocmd bufwritepost .vimrc source $MYVIMRC
 
 
 
-" Bugged Word Count, from https://stackoverflow.com/questions/114431/fast-word-count-function-in-vim
-" Gives a weird functionality where there is a character under tha cursor that
-" cannot easily be deleted. Also crashes on invocation with an empty document
-" function WordCount()
-"   let s:old_status = v:statusmsg
-"   exe 'silent normal g\<c-g>'
-"   let s:word_count = str2nr(split(v:statusmsg)[11])
-"   let v:statusmsg = s:old_status
-"   return s:word_count
-" endfunction
-" :set statusline=wc:%{WordCount()}
-
-
-"" Proper wordcount implementation, from https://cromwell-intl.com/open-source/vim-word-count.html
+"" Proper wordcount implementation, from https://cromwell-intl.com/open-source/vim-word-count.html, added callable Count() function
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" Here begins my automated wordcount addition.
 "" This combines several ideas from:
 "" http://stackoverflow.com/questions/114431/fast-word-count-function-in-vim
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"let g:word_count="<unknown>"
-"function WordCount()
-"	return g:word_count
-"endfunction
-"function UpdateWordCount()
-"	let lnum = 1
-"	let n = 0
-"	while lnum <= line('$')
-"		let n = n + len(split(getline(lnum)))
-"		let lnum = lnum + 1
-"	endwhile
-"	let g:word_count = n
-"endfunction
-"" Update the count when cursor is idle in command or insert mode.
-"" Update when idle for 1000 msec (default is 4000 msec).
-"set updatetime=1000
-"augroup WordCounter
-"	au! CursorHold,CursorHoldI * call UpdateWordCount()
-"augroup END
-"" Set statusline, shown here a piece at a time
-"highlight User1 ctermbg=green guibg=green ctermfg=black guifg=black
-"set statusline=%1*			" Switch to User1 color highlight
-"set statusline+=%<%F			" file name, cut if needed at start
-"set statusline+=%M			" modified flag
-"set statusline+=%y			" file type
-"set statusline+=%=			" separator from left to right justified
-"set statusline+=\ %{WordCount()}\ words,
-"set statusline+=\ %l/%L\ lines,\ %P	" percentage through the file
+function Count()
+    let g:word_count="<unknown>"
+    function WordCount()
+        return g:word_count
+    endfunction
+    function UpdateWordCount()
+        let lnum = 1
+        let n = 0
+        while lnum <= line('$')
+            let n = n + len(split(getline(lnum)))
+            let lnum = lnum + 1
+        endwhile
+        let g:word_count = n
+    endfunction
+    " Update the count when cursor is idle in command or insert mode.
+    " Update when idle for 1000 msec (default is 4000 msec).
+    set updatetime=1000
+    augroup WordCounter
+        au! CursorHold,CursorHoldI * call UpdateWordCount()
+    augroup END
+    " Set statusline, shown here a piece at a time
+    highlight User1 ctermbg=green guibg=green ctermfg=black guifg=black
+    set statusline=%1*			" Switch to User1 color highlight
+    set statusline+=%<%F			" file name, cut if needed at start
+    set statusline+=%M			" modified flag
+    set statusline+=%y			" file type
+    set statusline+=%=			" separator from left to right justified
+    set statusline+=\ %{WordCount()}\ words,
+    set statusline+=\ %l/%L\ lines,\ %P	" percentage through the file
+endfunction
 
 " Text width and highlighting the column at the end of the width, from http://blog.ezyang.com/2010/03/vim-textwidth/
 " Here are the configuration options you care about:
@@ -400,7 +393,7 @@ function! MarkdownPrefFunction()
     setlocal autoindent
     setlocal colorcolumn=0
     setlocal linebreak
-    setlocal nonumber
+    " setlocal nonumber
     setlocal shiftwidth=4
     setlocal spell
     setlocal tabstop=4
