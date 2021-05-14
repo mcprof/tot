@@ -85,6 +85,9 @@ set softtabstop=4
 set expandtab                   " use spaces, not tabs (optional)
 set backspace=indent,eol,start  " backspace through everything in insert mode
 
+" Set number of lines from the bottom that will be offset when scrolling
+set scrolloff=5
+
 " https://vim.fandom.com/wiki/Word_wrap_without_line_breaks
 set wrap linebreak
 
@@ -412,7 +415,7 @@ function! PythonPrefFunction()
     set tw=80
     set fo=cq
     set wm=0
-    set colorcolumn=+1
+    " set colorcolumn=+1
 endfunction
 autocmd Filetype python call PythonPrefFunction()
 
@@ -427,3 +430,6 @@ function! CPrefFunction()
 endfunction
 autocmd Filetype c call CPrefFunction()
 
+
+" ref:
+" Find/Replace across every open buffer (may need '!' after bufdo?): bufdo %s/getNames/getName/g
