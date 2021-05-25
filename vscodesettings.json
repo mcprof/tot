@@ -1,0 +1,23 @@
+{
+    "editor.suggestSelection": "first",
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+    "files.exclude": {
+        "**/.classpath": true,
+        "**/.project": true,
+        "**/.settings": true,
+        "**/.factorypath": true
+    },
+    "editor.cursorBlinking": "solid",
+    "editor.cursorStyle": "block",
+    "vim.mouseSelectionGoesIntoVisualMode": false,
+    "workbench.colorTheme": "Solarized Light",
+    "vim.insertModeKeyBindings": [
+        {
+            "before": ["j", "k"],
+            "after": ["<Esc>"]
+        } ,
+        {
+            "before": ["k", "j"],
+            "after": ["<Esc>"]
+        }     ]
+}
