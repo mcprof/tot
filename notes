@@ -1,0 +1,2 @@
+# Copy symbolic links without traversing it http://unix.stackexchange.com/questions/56084/ddg#56170
+cp -P ___
