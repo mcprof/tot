@@ -20,3 +20,31 @@ Caps Lock
  Caps Lock escape behaviour https://www.dannyguo.com/blog/remap-caps-lock-to-escape-and-control/
 Manually invoke with command: `xcape -e 'Control_L=Escape'`
 Add `xcape` to .bash_rc to initialize it automatically
+
+---
+
+Ubunutu laptop lid handling sleep suspend
+https://ubuntuhandbook.org/index.php/2020/05/lid-close-behavior-ubuntu-20-04/
+1.) Open terminal (press Ctrl+Alt+T on Gnome) from your system application menu. When it opens, run command:
+
+sudo gedit /etc/systemd/logind.conf
+
+Type user password (no asterisk feedback) and hit Enter. For Ubuntu server without UI, use nano text editor instead.
+
+2.) When the file opens, find out the line #HandleLidSwitch=suspend and change it to one of following :
+
+    HandleLidSwitch=lock – lock when lid closed.
+    HandleLidSwitch=ignore – do nothing.
+    HandleLidSwitch=poweroff – shutdown.
+    HandleLidSwitch=hibernate – hibernate Ubuntu.
+
+For automatic hibernate, you have to test if it works properly via command:
+
+sudo systemctl hibernate
+
+3.) Finally apply changes by running command:
+(Save your works before running the command, it may restart your session)
+
+systemctl restart systemd-logind.service
+
+Note you have to do previous steps every time you want to change the action. And ‘Suspend when laptop lid is closed‘ option in Gnome Tweaks will no longer work before you comment (add # at the beginning) the line in /etc/systemd/logind.conf.
