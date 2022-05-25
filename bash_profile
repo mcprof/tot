@@ -1,4 +1,5 @@
 export EDITOR='vim'
+export CLICOLOR=1
 
 function cd() {
     new_directory="$*";

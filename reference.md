@@ -1,3 +1,27 @@
+# create symbolic link
+ln -s target_file link_name
+
+# Copy symbolic links without traversing it http://unix.stackexchange.com/questions/56084/ddg#56170
+cp -P ___
+
+### File Navigation
+
+# for loop directory files, https://stackoverflow.com/questions/8512462/looping-through-all-files-in-a-directory
+for filename in *; do echo "put ${filename}"; done
+for filename in *; do ; done
+
+
+### Video
+
+# ffmpeg .m3u8 downloading, https://stackoverflow.com/questions/47233304/how-to-download-m3u8-in-once-time
+ffmpeg -i "http://example.com/chunklist.m3u8" -codec copy file.mp4
+ffmpeg -i '' -codec copy
+
+### Reference:
+
+### External Harddrive encryption
+# https://theawesomegarage.com/blog/encrypt-external-hard-drives-with-linux
+
 #Visual Studio Code 
 Directories for settings, from https://stackoverflow.com/questions/35368889/how-to-export-settings
 
@@ -13,6 +37,8 @@ Directories for settings, from https://stackoverflow.com/questions/35368889/how-
 > ~/.vscode/extensions on Linux and Mac OS X
 > C:\Users\username\.vscode\extensions on Windows 10 (e.g., essentially the same place)
 > Alternately, just go to the Extensions, show installed extensions, and install those on your target installation. For me, copying the extensions worked just fine, but it may be extension-specific, particularly if moving between platforms, depending on what the extension does.
+
+---
 
 ---
 
