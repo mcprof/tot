@@ -1,1 +1,0 @@
-tot/bash_profile
