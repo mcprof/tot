@@ -1,3 +1,6 @@
+# get server ssh fingerprint
+ssh-keygen -l -f <(ssh-keyscan localhost)
+
 # create symbolic link
 ln -s target_file link_name
 
