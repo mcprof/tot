@@ -1,3 +1,6 @@
+# find lines that match in text https://stackoverflow.com/questions/30800963/how-to-search-for-a-text-in-specific-files-in-unix#30801017
+find -type f -name "*.ht*" -exec grep '.png' {} + > pnglist.txt
+
 # create symbolic link
 ln -s target_file link_name
 
