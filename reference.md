@@ -1,6 +1,9 @@
 # find lines that match in text https://stackoverflow.com/questions/30800963/how-to-search-for-a-text-in-specific-files-in-unix#30801017
 find -type f -name "*.ht*" -exec grep '.png' {} + > pnglist.txt
 
+# get server ssh fingerprint
+ssh-keygen -l -f <(ssh-keyscan localhost)
+
 # create symbolic link
 ln -s target_file link_name
 
@@ -77,3 +80,17 @@ sudo systemctl hibernate
 systemctl restart systemd-logind.service
 
 Note you have to do previous steps every time you want to change the action. And ‘Suspend when laptop lid is closed‘ option in Gnome Tweaks will no longer work before you comment (add # at the beginning) the line in /etc/systemd/logind.conf.
+
+### Vim
+# Vim: delete lines that don’t match pattern https://www.nathankowald.com/blog/2013/01/vim-delete-lines-that-dont-match-pattern/
+Ex command :v to the rescue!
+
+:v/pattern/d
+
+Using :g! will give you the same result as using :v.
+:g finds lines that do match a pattern.
+
+I had a large list of locations. I wanted to keep only the locations containing hyphens and delete the rest so I used this: :v/-/d
+
+:v – find lines not matching your pattern
+d – delete matches
