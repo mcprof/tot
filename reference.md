@@ -1,3 +1,6 @@
+# downloading .m3u8 with ffmpeg https://www.leawo.org/entips/use-ffmpeg-to-download-m3u8-file-1395.html
+ffmpeg -i "http://example.com/video_url.m3u8" -c copy -bsf:a aac_adtstoasc "output.mp4" 
+
 # find lines that match in text https://stackoverflow.com/questions/30800963/how-to-search-for-a-text-in-specific-files-in-unix#30801017
 find -type f -name "*.ht*" -exec grep '.png' {} + > pnglist.txt
 
