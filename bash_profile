@@ -26,8 +26,9 @@ alias gitup='git submodule update --init --recursive && git submodule foreach --
 alias ulaunch='bash ~/launch.sh'
 alias launchu=ulaunch
 
+alias diskm='bash ~/.diskmount.sh'
+alias disku='bash ~/.diskunmount.sh'
 # alias diskm='sudo cryptsetup open /dev/sdb blackdrive ; sudo mount /dev/mapper/blackdrive ~/blackdrive'
 # alias disku='sudo umount ~/blackdrive ; sudo cryptsetup close cedar'
 
-# alias diskm='sudo cryptsetup open /dev/sdb cedar && sudo mount /dev/mapper/cedar ~/cedar' */
-# alias disku='sudo umount ~/cedar && sudo cryptsetup close cedar' */
+alias paperpush='rsync -auhcPv ~/Documents/finalpaper gehirn:Documents/'
