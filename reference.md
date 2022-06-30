@@ -1,3 +1,6 @@
+# combining video and audio files in ffmpeg https://davidwalsh.name/combine-audio-video
+ffmpeg -i video.mp4 -i audio.m4a -c:v copy -c:a copy output.mp4
+
 # downloading .m3u8 with ffmpeg https://www.leawo.org/entips/use-ffmpeg-to-download-m3u8-file-1395.html
 ffmpeg -i "http://example.com/video_url.m3u8" -c copy -bsf:a aac_adtstoasc "output.mp4" 
 
