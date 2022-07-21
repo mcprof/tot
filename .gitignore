@@ -1,5 +1,7 @@
 # user added:
 vim/bundle/YouCompleteMe
+vim/bundle/**
+**/Vundle.vim
 
 .DS_Store
 **/undo/

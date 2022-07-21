@@ -164,7 +164,7 @@ noremap <silent> <c-_> :let @/ = ""<CR>
 " Autosave when focus is lost (uncertain if functioning
 au FocusLost * :wa
 " Autosave on text change, from https://stackoverflow.com/questions/6991638/how-to-auto-save-a-file-every-1-second-in-vim
-autocmd TextChanged,TextChangedI * silent write
+" autocmd TextChanged,TextChangedI * silent write
 
 
 " au BufNewFile,BufRead *.py
@@ -398,7 +398,7 @@ function! MarkdownPrefFunction()
     setlocal linebreak
     " setlocal nonumber
     setlocal shiftwidth=4
-    setlocal spell
+    setlocal spell spelllang=en_ca
     setlocal tabstop=4
     setlocal wrap
     PencilSoft

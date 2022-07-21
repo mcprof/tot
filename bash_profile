@@ -29,7 +29,7 @@ alias launchu=ulaunch
 alias diskm='bash ~/.diskmount.sh'
 alias disku='bash ~/.diskunmount.sh'
 # alias diskm='sudo cryptsetup open /dev/sdb blackdrive ; sudo mount /dev/mapper/blackdrive ~/blackdrive'
-# alias disku='sudo umount ~/blackdrive ; sudo cryptsetup close cedar'
+# alias disku='sudo umount ~/blackdrive ; sudo cryptsetup close blackdrive'
 
 alias paperpush='rsync -auhcPv ~/Documents/finalpaper gehirn:Documents/'
 

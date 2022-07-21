@@ -8,7 +8,7 @@
         "**/.factorypath": true
     },
     "editor.cursorBlinking": "solid",
-    "editor.cursorStyle": "block",
+    "editor.cursorStyle": "line",
     "vim.mouseSelectionGoesIntoVisualMode": false,
     "workbench.colorTheme": "Solarized Light",
     "vim.insertModeKeyBindings": [
@@ -19,5 +19,12 @@
         {
             "before": ["k", "j"],
             "after": ["<Esc>"]
-        }     ]
+        }
+    ],
+    "editor.tabSize": 8,
+    "editor.insertSpaces": false,
+    "editor.lineNumbers": "on",
+    "editor.wordSeparators": "/\\()\"':,.;<>~!@#$%^&*|+=[]{}`?-",
+    "editor.wordWrap": "on",
+    "editor.fontSize": 11
 }
