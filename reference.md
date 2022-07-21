@@ -1,3 +1,7 @@
+# rsync command
+rsync -auhcPv ~/Documents/source gehirn:Documents/
+Z
+=======
 # combining video and audio files in ffmpeg https://davidwalsh.name/combine-audio-video
 ffmpeg -i video.mp4 -i audio.m4a -c:v copy -c:a copy output.mp4
 
