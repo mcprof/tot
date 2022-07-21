@@ -32,3 +32,8 @@ alias disku='bash ~/.diskunmount.sh'
 # alias disku='sudo umount ~/blackdrive ; sudo cryptsetup close cedar'
 
 alias paperpush='rsync -auhcPv ~/Documents/finalpaper gehirn:Documents/'
+
+alias balpush='bash ~/.balthasarpush.sh'
+# rsync -auPhv --exclude-from='/Volumes/Alpha/mirror/excludelist.txt' /Volumes/Alpha/mirror/AlphaStorage balthasarl:cedar/mirror/
+alias balpushdel='bash ~/.balthasarpushdelete.sh'
+# rsync -auPhv --delete --exclude-from='/Volumes/Alpha/mirror/excludelist.txt' /Volumes/Alpha/mirror/AlphaStorage balthasarl:cedar/mirror/
