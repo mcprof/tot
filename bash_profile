@@ -26,8 +26,23 @@ alias gitup='git submodule update --init --recursive && git submodule foreach --
 alias ulaunch='bash ~/launch.sh'
 alias launchu=ulaunch
 
+alias diskm='bash ~/.diskmount.sh'
+alias disku='bash ~/.diskunmount.sh'
 # alias diskm='sudo cryptsetup open /dev/sdb blackdrive ; sudo mount /dev/mapper/blackdrive ~/blackdrive'
 # alias disku='sudo umount ~/blackdrive ; sudo cryptsetup close blackdrive'
 
 # alias diskm='sudo cryptsetup open /dev/sdb cedar && sudo mount /dev/mapper/cedar ~/cedar' */
 # alias disku='sudo umount ~/cedar && sudo cryptsetup close cedar' */
+
+alias balpush='bash ~/.balthasarpush.sh'
+# rsync -auPhv --exclude-from='~/blackdrive/mirror/excludelist.txt' ~/blackdrive/mirror/ AlphaStorage balthasarl:cedar/mirror/
+alias balpushdel='bash ~/.balthasarpushdelete.sh'
+# rsync -auPhv --delete --exclude-from='/Volumes/Alpha/mirror/excludelist.txt' /Volumes/Alpha/       mirror/AlphaStorage balthasarl:/mirror/
+
+alias balpull='bash ~/.balthasarpull.sh'
+# rsync -auPhv --exclude-from='~/blackdrive/mirror/excludelist.txt' balthasarl:cedar/mirror/AlphaStorage ~/blackdrive/mirror
+alias balpulldel='bash ~/.balthasardeletepull.sh'
+# rsync -auPhv --delete --exclude-from='~/blackdrive/mirror/excludelist.txt' balthasarl:cedar/mirror/AlphaStorage ~/blackdrive/mirror
+# rsync -auPhv --dry-run --delete --exclude-from='/home/mc/blackdrive/mirror/excludelist.txt'  balthasarl:cedar/mirror/AlphaStorage ~/blackdrive/mirror
+
+# rsync -auPhv --dry-run --delete --exclude-from='/home/mc/blackdrive/mirror/excludelist.txt'  balthasarl:cedar/mirror ~/blackdrive
