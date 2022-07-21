@@ -164,7 +164,7 @@ noremap <silent> <c-_> :let @/ = ""<CR>
 " Autosave when focus is lost (uncertain if functioning
 au FocusLost * :wa
 " Autosave on text change, from https://stackoverflow.com/questions/6991638/how-to-auto-save-a-file-every-1-second-in-vim
-autocmd TextChanged,TextChangedI * silent write
+" autocmd TextChanged,TextChangedI * silent write
 
 
 " au BufNewFile,BufRead *.py
@@ -398,7 +398,7 @@ function! MarkdownPrefFunction()
     setlocal linebreak
     " setlocal nonumber
     setlocal shiftwidth=4
-    setlocal spell
+    setlocal spell spelllang=en_ca
     setlocal tabstop=4
     setlocal wrap
     PencilSoft
@@ -433,3 +433,23 @@ autocmd Filetype c call CPrefFunction()
 
 " ref:
 " Find/Replace across every open buffer (may need '!' after bufdo?): bufdo %s/getNames/getName/g
+
+" For MacVim so stop cursor blinking, from https://vi.stackexchange.com/questions/14541/no-cursor-blinking-doesnt-work
+" set gcr+=a:blinkon0
+
+
+" experimental cursor stuff to mirror MacVim changing shape per mode, from https://vim.fandom.com/wiki/Change_cursor_shape_in_different_modes
+"Mode Settings
+
+let &t_SI.="\e[6 q" "SI = INSERT mode
+let &t_SR.="\e[4 q" "SR = REPLACE mode
+let &t_EI.="\e[2 q" "EI = NORMAL mode (ELSE)
+
+"Cursor settings:
+
+"  1 -> blinking block
+"  2 -> solid block 
+"  3 -> blinking underscore
+"  4 -> solid underscore
+"  5 -> blinking vertical bar
+"  6 -> solid vertical bar
