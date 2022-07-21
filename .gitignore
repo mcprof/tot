@@ -1,7 +1,11 @@
+# user added:
+vim/bundle/YouCompleteMe
+vim/bundle/**
+**/Vundle.vim
+
 .DS_Store
 **/undo/
 **/third_party/
-
 
 # Created by https://www.toptal.com/developers/gitignore/api/vim,macos
 # Edit at https://www.toptal.com/developers/gitignore?templates=vim,macos

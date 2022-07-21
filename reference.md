@@ -1,3 +1,39 @@
+# combining video and audio files in ffmpeg https://davidwalsh.name/combine-audio-video
+ffmpeg -i video.mp4 -i audio.m4a -c:v copy -c:a copy output.mp4
+
+# downloading .m3u8 with ffmpeg https://www.leawo.org/entips/use-ffmpeg-to-download-m3u8-file-1395.html
+ffmpeg -i "http://example.com/video_url.m3u8" -c copy -bsf:a aac_adtstoasc "output.mp4" 
+
+# find lines that match in text https://stackoverflow.com/questions/30800963/how-to-search-for-a-text-in-specific-files-in-unix#30801017
+find -type f -name "*.ht*" -exec grep '.png' {} + > pnglist.txt
+
+# get server ssh fingerprint
+ssh-keygen -l -f <(ssh-keyscan localhost)
+
+# create symbolic link
+ln -s target_file link_name
+
+# Copy symbolic links without traversing it http://unix.stackexchange.com/questions/56084/ddg#56170
+cp -P ___
+
+### File Navigation
+
+# for loop directory files, https://stackoverflow.com/questions/8512462/looping-through-all-files-in-a-directory
+for filename in *; do echo "put ${filename}"; done
+for filename in *; do ; done
+
+
+### Video
+
+# ffmpeg .m3u8 downloading, https://stackoverflow.com/questions/47233304/how-to-download-m3u8-in-once-time
+ffmpeg -i "http://example.com/chunklist.m3u8" -codec copy file.mp4
+ffmpeg -i '' -codec copy
+
+### Reference:
+
+### External Harddrive encryption
+# https://theawesomegarage.com/blog/encrypt-external-hard-drives-with-linux
+
 #Visual Studio Code 
 Directories for settings, from https://stackoverflow.com/questions/35368889/how-to-export-settings
 
@@ -16,7 +52,51 @@ Directories for settings, from https://stackoverflow.com/questions/35368889/how-
 
 ---
 
+---
+
 Caps Lock
  Caps Lock escape behaviour https://www.dannyguo.com/blog/remap-caps-lock-to-escape-and-control/
 Manually invoke with command: `xcape -e 'Control_L=Escape'`
 Add `xcape` to .bash_rc to initialize it automatically
+
+---
+
+Ubunutu laptop lid handling sleep suspend
+https://ubuntuhandbook.org/index.php/2020/05/lid-close-behavior-ubuntu-20-04/
+1.) Open terminal (press Ctrl+Alt+T on Gnome) from your system application menu. When it opens, run command:
+
+sudo gedit /etc/systemd/logind.conf
+
+Type user password (no asterisk feedback) and hit Enter. For Ubuntu server without UI, use nano text editor instead.
+
+2.) When the file opens, find out the line #HandleLidSwitch=suspend and change it to one of following :
+
+    HandleLidSwitch=lock – lock when lid closed.
+    HandleLidSwitch=ignore – do nothing.
+    HandleLidSwitch=poweroff – shutdown.
+    HandleLidSwitch=hibernate – hibernate Ubuntu.
+
+For automatic hibernate, you have to test if it works properly via command:
+
+sudo systemctl hibernate
+
+3.) Finally apply changes by running command:
+(Save your works before running the command, it may restart your session)
+
+systemctl restart systemd-logind.service
+
+Note you have to do previous steps every time you want to change the action. And ‘Suspend when laptop lid is closed‘ option in Gnome Tweaks will no longer work before you comment (add # at the beginning) the line in /etc/systemd/logind.conf.
+
+### Vim
+# Vim: delete lines that don’t match pattern https://www.nathankowald.com/blog/2013/01/vim-delete-lines-that-dont-match-pattern/
+Ex command :v to the rescue!
+
+:v/pattern/d
+
+Using :g! will give you the same result as using :v.
+:g finds lines that do match a pattern.
+
+I had a large list of locations. I wanted to keep only the locations containing hyphens and delete the rest so I used this: :v/-/d
+
+:v – find lines not matching your pattern
+d – delete matches
