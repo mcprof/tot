@@ -2,6 +2,10 @@
 rsync -auhcPv ~/Documents/source gehirn:Documents/
 Z
 =======
+
+# wget
+wget --content-disposition -w 60 --random-wait --user-agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 12_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36" --execute robots=off
+
 # combining video and audio files in ffmpeg https://davidwalsh.name/combine-audio-video
 ffmpeg -i video.mp4 -i audio.m4a -c:v copy -c:a copy output.mp4
 
