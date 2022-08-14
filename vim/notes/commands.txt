@@ -1,6 +1,9 @@
 # Compare directories to see differences. Run twice with target and source reversing. https://unix.stackexchange.com/questions/57305/rsync-compare-directories
 rsync -avun --delete $TARGET $SOURCE  |grep "^deleting "
 
+# standard rsync options
+rsync -auPvh
+
 ### File Navigation
 
 # for loop directory files, https://stackoverflow.com/questions/8512462/looping-through-all-files-in-a-directory
