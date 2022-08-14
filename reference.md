@@ -108,3 +108,7 @@ I had a large list of locations. I wanted to keep only the locations containing 
 
 :v – find lines not matching your pattern
 d – delete matches
+
+# zip tar u
+tar -Scvzf ~/____.tar.gz ~/____/
+tar xfvz ____.tar.gz
