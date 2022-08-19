@@ -1,7 +1,8 @@
-# rsync command
-rsync -auhcPv ~/Documents/source gehirn:Documents/
-Z
-=======
+# Compare directories to see differences. Run twice with target and source reversing. https://unix.stackexchange.com/questions/57305/rsync-compare-directories
+rsync -avun --delete $TARGET $SOURCE  |grep "^deleting "
+
+# standard rsync options
+rsync -auPvh
 
 # wget
 wget --content-disposition -w 60 --random-wait --user-agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 12_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36" --execute robots=off
@@ -30,17 +31,110 @@ cp -P ___
 for filename in *; do echo "put ${filename}"; done
 for filename in *; do ; done
 
-
 ### Video
 
 # ffmpeg .m3u8 downloading, https://stackoverflow.com/questions/47233304/how-to-download-m3u8-in-once-time
 ffmpeg -i "http://example.com/chunklist.m3u8" -codec copy file.mp4
 ffmpeg -i '' -codec copy
 
+# Merging video and audio https://superuser.com/questions/277642/how-to-merge-audio-and-video-file-in-ffmpeg
+ffmpeg -i video.mp4 -i audio.wav -c copy output.mkv
+
 ### Reference:
 
 ### External Harddrive encryption
 # https://theawesomegarage.com/blog/encrypt-external-hard-drives-with-linux
+# Encrypt external hard drives with Linux
+# 19th Dec 2019 luks raspberry dm-crypt
+#
+# Have you ever attached an external hard drive to a Linux server or a Raspberry Pi? An external drive comes in handy to expand storage capacity, but they are also very easy to steal or otherwise become lost. The very first thing you should do when attaching an external hard drive, is to encrypt it!
+#
+# This tutorial will teach you how to very easily encrypt your external hard drive with Linux, more specifically with a Raspberry Pi. Encryption will impact performance at a varying degree. If you are on a modern desktop/laptop/mobile CPU, you'll have hardware assisted cryptography and see little to no performance degradation. Some say there is a 1% degradation. Raspberries up to and including version 4 don't have HW assisted cryptography. Thus, you'll have a notable performance hit. Some say 30% on disk read/write. In my particular case, the cryptography doesn't lower the perceived system performance as the network is the real bottleneck.
+#
+# Another thing to be aware of is that the drive you encrypt will be wiped completely in the process. Or at least the partition you wish to encrypt. The tutorial will assume you wipe and encrypt the entire disk, but if you know your way around disk tools you can adapt the tutorial to work on a specific partition.
+#
+# First, find your disk! Attach the disk to your system and run:
+#
+# sudo fdisk -l
+#
+# Look for /dev/sda, /dev/sdb, or something similar. The tutorial assumes /dev/sda, but BEWARE (!), sda is normally the first drive to be detected by your system. In your case, it might not be /dev/sda you wish to wipe!
+#
+# If you have data stored on the hard drive to begin with, and if the drive is a traditional spindle drive, shred it first. For a 2TB disk, expect even the simplest form of shredding to last 8-12 hours depending on your hardware.
+#
+# sudo shred -v -n 1 /dev/sda
+#
+# This is a basic shredding method that won't hinder FSB or CIA to gain access to the previously stored content. If you swap out the number 1 with 7, even the aforementioned agencies will start having problems rebuilding your previous information, as you rewrite the entire disk 7 times with random data. It will however take 7 times longer to shred the drive, too.
+#
+# With a fresh drive, wipe existing partitions and start over with a single new primary partition:
+#
+# sudo fdisk /dev/sda
+#
+# Within the fdisk tool, you'll be asked a few questions; here are the answers I suggest for the process: Press d + enter to delete existing partitions Press n + enter to create new partition Press enter to select p (default) to create a new primary partition Press enter to acknowledge the default partition number Press enter to acknowledge the default starting sector Press enter to acknowledge the default last sector If asked, answer yes to remove signatures. In the end, press w + enter to write your changes. You will now automatically exit the fidsk tool.
+#
+# Now run:
+#
+# sudo mkfs.ext4 /dev/sda1
+#
+# Take a note of your UUID, as you'll use it for mounting the encrypted volume later on. You can use blkid to find it:
+#
+# sudo blkid
+#
+# If you haven't already, install the crypto tool. Run modprobe in the end to load the needed modules without a reboot.
+#
+# sudo apt-get install cryptsetup
+# sudo modprobe dm-crypt sha256 aes
+#
+# Now, set up your encrypted volume. You'll be asked to enter a passphrase. WRITE IT DOWN somewhere secure. You'll need the passphrase to gain access to your encrypted data and to configure your encrypted volume later on!
+#
+# sudo cryptsetup --verify-passphrase luksFormat /dev/sda1 -c aes -s 256 -h sha256
+# sudo cryptsetup luksOpen /dev/sda1 NameOfYourChoice
+#
+# This will create a mapper that identifies your encrypted volume (really a dm-crypt target); it will be named "NameOfYourChoice".
+#
+# Now, select a file system for your encrypted volume. I've opted for ext4:
+#
+# sudo mkfs -t ext4 -m 1 /dev/mapper/NameOfYourChoice
+#
+# This will take a minute or so.
+#
+# Now, create a mount point and try mounting and unmounting (really, make sure to test unmounting to avoid silent mount errors!):
+#
+# sudo mkdir /media/NameOfYourChoice
+# sudo mount /dev/mapper/NameOfYourChoice /media/NameOfYourChoice
+# sudo umount /media/NameOfYourChoice
+#
+# You should receive no errors in this process. Note, the mounted device will only be available to root, unless you chown the media mount point. If you need to give access to other users, for instance the default pi user on your Raspberry Pi:
+#
+# sudo chown pi:pi /media/NameOfYourChoice/
+#
+# If you run a headless server, you would like your encrypted volume to automount on boot. In this case you need to create a key file that can unlock your volume automatically.
+#
+# sudo dd if=/dev/urandom of=/root/my-keyfile bs=1024 count=4
+# sudo chmod 400 /root/my-keyfile
+#
+# Add the key file to encrypted partition:
+#
+# sudo cryptsetup luksAddKey /dev/sda1 /root/my-keyfile
+#
+# Now, tell the system that you have an encrypted volume, how to find it and how to open the secure volume with a key file:
+#
+# sudo vi /etc/crypttab
+# NameOfYourChoice    UUID=81dc5f18-ce89-4c0d-b9d3-c0123789144a   /root/my-keyfile    luks
+#
+# Note 1. Use the previously identified UUID in the crypttab. Do NOT use the mapper UUID. Use the partition (sda1) UUID. Note 2. If you don't want to automount the encrypted volume, replace /root/my-keyfile with the keyword none. You'll be prompted for the passphrase upon boot. This is NOT a good idea for headless servers.
+#
+# When the crypttab is to your liking, tell the system to mount the encrypted volume to a mount point on boot with fstab:
+#
+# sudo vi /etc/fstab
+# /dev/mapper/NameOfYourChoice    /media/NameOfYourChoice ext4    defaults,rw 0 0
+#
+# When you now reboot the Raspberry Pi it will boot up, and without asking for a password, the encrypted USB HDD is unlocked.
+#
+# If you detach the external hard drive and connect it to another computer, it will be encrypted and unreadable. If you lose your key file and your passphrase, the contents of the disk are lost to you too!
+#
+# PRO TIP! If mounting fails between attempts where you change the contetnts of fstab, try:
+#
+# sudo systemctl daemon-reload
 
 #Visual Studio Code 
 Directories for settings, from https://stackoverflow.com/questions/35368889/how-to-export-settings
@@ -58,18 +152,12 @@ Directories for settings, from https://stackoverflow.com/questions/35368889/how-
 > C:\Users\username\.vscode\extensions on Windows 10 (e.g., essentially the same place)
 > Alternately, just go to the Extensions, show installed extensions, and install those on your target installation. For me, copying the extensions worked just fine, but it may be extension-specific, particularly if moving between platforms, depending on what the extension does.
 
----
-
----
-
-Caps Lock
+# Caps Lock
  Caps Lock escape behaviour https://www.dannyguo.com/blog/remap-caps-lock-to-escape-and-control/
 Manually invoke with command: `xcape -e 'Control_L=Escape'`
 Add `xcape` to .bash_rc to initialize it automatically
 
----
-
-Ubunutu laptop lid handling sleep suspend
+# Ubunutu laptop lid handling sleep suspend
 https://ubuntuhandbook.org/index.php/2020/05/lid-close-behavior-ubuntu-20-04/
 1.) Open terminal (press Ctrl+Alt+T on Gnome) from your system application menu. When it opens, run command:
 
