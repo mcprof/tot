@@ -136,6 +136,33 @@ ffmpeg -i video.mp4 -i audio.wav -c copy output.mkv
 #
 # sudo systemctl daemon-reload
 
+# Alternate external disk encryption from https://www.wikihow.com/Encrypt-an-External-Hard-Drive-on-Linux
+#
+# Mount the drive manually if the prompt doesn't open.
+#
+#    Find the device name: lsblk
+#    If this is the first time you are mounting it, create a directory to mount it in, for example: sudo mkdir /mnt/encrypted. Otherwise, use the directory you previously created.
+#    Open the encrypted partition: sudo cryptsetup luksOpen /dev/sdX sdX
+#    Mount the encrypted partition: sudo mount /dev/mapper/sdX /mnt/encrypted
+#
+#Image titled Linux mounted folder adjust permissions.png
+#4
+#Adjust the permissions if this is the first time you're mounting the drive. When you mount the drive for the first time, writing to the drive requires sudo. To change that, transfer ownership of the folder to the current user: sudo chown -R `whoami`:users /mnt/encrypted
+#
+#    If your hard drive was mounted automatically, you can find out where it was mounted using lsblk. Often, it is at a path similar to: /media/your_username/drive_label 
+#
+#5
+#Use the hard drive. You may now use your encrypted hard drive like you would any other hard drive, reading files from it and transferring files onto it.
+#Image titled Linux unmount encrypted partition.png
+#6
+#Unmount the encrypted hard drive. This is necessary so that you may safely disconnect it. You can do so through a file manager, or over the terminal:
+#
+#    Unmount the encrypted partition: sudo umount /mnt/encrypted
+#    Close the encrypted partition: sudo cryptsetup luksClose sdX
+#        If that gives the error message "Device sdX is not active.", the encrypted partition had been opened under a different name (that can happen, for example, if you entered the passphrase in the prompt instead of mounting manually). You can find it with the lsblk command. Look for an entry of type crypt.
+
+
+
 #Visual Studio Code 
 Directories for settings, from https://stackoverflow.com/questions/35368889/how-to-export-settings
 
