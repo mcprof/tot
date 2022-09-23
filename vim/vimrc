@@ -257,11 +257,12 @@ map <silent> <F4> :wa<cr><bar>:silent exec "!tmux send -t right '\\!\\!' C-m"<cr
 imap <silent> <F4> <Esc>:wa<cr><bar>:silent exec "!tmux send -t right '\\!\\!' C-m"<cr><bar>:redraw!<cr>
 map <silent> <F12> :wa<cr><bar>:silent exec "!tmux send -t bottom '\\!\\!' C-m"<cr><bar>:redraw!<cr>
 " set <F4>=<C-v><F4> " to get F4 to trigger in insert mode too
+map <silent> <leader>g :wa<cr><bar>:silent exec "!tmux send -t right 'date' C-m"<cr><bar>:silent exec "!tmux send -t right '\\!-2' C-m"<cr><bar>:redraw!<cr>
 
 
 " vimrc editing and reloading
 nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
-map <leader>vr :source $MYVIMRC<cr>
+map <leader>vr :tabe $MYVIMRC<cr>:source $MYVIMRC<cr>
 map <leader>vimrc :tabe $MYVIMRC<cr>
 autocmd bufwritepost .vimrc source $MYVIMRC
 
