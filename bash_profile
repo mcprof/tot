@@ -13,7 +13,7 @@ function cd() {
 set -o vi
 
 alias jim='vim ~/.bash_profile; source ~/.bash_profile'
-alias jimup='sudo apt update && sudo apt upgrade && sudo apt update && sudo apt upgrade'
+alias jimup='sudo apt update && sudo apt upgrade -y && sudo apt update && sudo apt upgrade -y'
 alias vimjim='vim ~/.vim/vimrc'
 alias jimvim='vim ~/.vim/vimrc'
 alias lsd="ls -lh && du -h --max-depth 1"

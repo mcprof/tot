@@ -3,6 +3,8 @@ rsync -avun --delete $TARGET $SOURCE  |grep "^deleting "
 
 # standard rsync options
 rsync -auPvh
+--exclude 'file.txt'
+--exclude 'dir1'
 
 # wget
 wget --content-disposition -w 60 --random-wait --user-agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 12_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36" --execute robots=off
