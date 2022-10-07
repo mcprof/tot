@@ -1,5 +1,6 @@
 export EDITOR='vim'
 export CLICOLOR=1
+TERM=xterm
 
 function cd() {
     new_directory="$*";
