@@ -10,6 +10,8 @@ alias jim='vim ~/.zshrc; source ~/.zshrc'
 alias jimup="brew update && brew upgrade && brew update && brew upgrade && pip3 install -U pip && pip3 install -U youtube-dl && pip3 install -U wget"
 alias vimjim="vim ~/tot/vim/vimrc"
 alias jimvim="vim ~/tot/vim/vimrc"
+alias lsd="ls -lh && du -h --max-depth 1"
+alias notes="vim ~/tot/reference.md"
 
 # https://ma.ttias.be/du-max-depth-alternative-mac-osx/
 alias lsd="ls -lh && du -hd1"
