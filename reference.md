@@ -33,6 +33,13 @@ cp -P ___
 for filename in *; do echo "put ${filename}"; done
 for filename in *; do ; done
 
+
+# loop through all files of a type https://fedingo.com/bash-loop-through-files-in-directory-recursively/
+for i in $(find . -type f -print0 -name "*.pdf")
+do
+    #code to perform task on each file
+done
+
 ### Video
 
 # ffmpeg .m3u8 downloading, https://stackoverflow.com/questions/47233304/how-to-download-m3u8-in-once-time
@@ -284,3 +291,7 @@ d – delete matches
 # zip tar u
 tar -Scvzf ~/____.tar.gz ~/____/
 tar xfvz ____.tar.gz
+
+# bash edit command in vim https://dev.to/chhajedji/bash-edit-command-in-your-editor-and-execute-directly-30ef
+If you use shell in default mode (emacs if you don't know :P), you can press ctrl-x ctrl-e
+If you are using vi mode, you can move to normal mode by pressing Esc and then pressing v would achieve similar functionality.
