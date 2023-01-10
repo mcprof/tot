@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #!/bin/sh
 
 #### adapted from https://github.com/mackiedrew/linux-setup-script/blob/master/setup.sh
@@ -143,3 +144,20 @@ git config --global core.editor "vim"
 #### Change Bash Prompt ####
 # echo "export PS1=\"\[\033[38;5;26m\]⛴  \[\033[38;5;254m\]\w\[$(tput sgr0)\]\[$(tput sgr0)\]\[\033[38;5;15m\] > \[$(tput sgr0)\]\"" >> ~/.bashrc
 # source ~/.bashrc
+=======
+#!/bin/bash
+
+ln -s ~/tot/vim ~/.vim
+ln -s ~/tot/inputrc ~/.inputrc
+ln -s ~/tot/ideavimrc  ~/.ideavimrc
+ln -s ~/tot/bash_profile ~/.bash_profile
+ln -s ~/tot/zshrc ~/.zshrc
+ln -s ~/tot/tmux.conf ~/.tmux.conf
+ln -s ~/tot/vscodesettings.json ~/.vscodesettings.json
+
+echo "Aliases created"
+
+source ~/.bash_profile
+
+echo "Profile sourced"
+>>>>>>> 54a3e9568e54060f45e2664aa6d027a2df41d8c8
