@@ -17,6 +17,10 @@ alias jim='vim ~/.bash_profile; source ~/.bash_profile'
 alias jimup='sudo apt update && sudo apt upgrade -y && sudo apt update && sudo apt upgrade -y'
 alias vimjim='vim ~/.vim/vimrc'
 alias jimvim='vim ~/.vim/vimrc'
+alias yv='yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]" '
+alias ya='yt-dlp -f "bestaudio[ext=m4a]" '
+alias yy='cd ~/media && yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]" '
+alias yt='cd ~/media && yt-dlp '
 alias lsd="ls -lh && du -h --max-depth 1"
 alias notes="vim ~/tot/reference.md"
 
@@ -31,6 +35,9 @@ alias diskm='bash ~/.diskmount.sh'
 alias disku='bash ~/.diskunmount.sh'
 # alias diskm='sudo cryptsetup open /dev/sdb blackdrive ; sudo mount /dev/mapper/blackdrive ~/blackdrive'
 # alias disku='sudo umount ~/blackdrive ; sudo cryptsetup close blackdrive'
+alias sidem='bash ~/.sidemount.sh'
+alias sideu='bash ~/.sideunmount.sh'
+alias backup='bash ~/.backuptosidecar.sh'
 
 # alias diskm='sudo cryptsetup open /dev/sdb cedar && sudo mount /dev/mapper/cedar ~/cedar' */
 # alias disku='sudo umount ~/cedar && sudo cryptsetup close cedar' */
